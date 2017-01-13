@@ -27,10 +27,10 @@ public class Card : MonoBehaviour {
         _cardBack = _manager.GetComponent<GameManager>().getCardBack();
         _cardFace = _manager.GetComponent<GameManager>().getCardFace(cardValue);
 
-        flipCard();
+        FlipCard();
     }
 
-    void flipCard()
+    void FlipCard()
     {
         if (_faceUp && allowFlipping)
             GetComponent<Image>().sprite = _cardBack;
@@ -60,12 +60,12 @@ public class Card : MonoBehaviour {
         set { _manager = value; }
     }
 
-    public void falseCheck()
+    public void FalseCheck()
     {
-        StartCoroutine(pause());
+        StartCoroutine(Pause());
     }
 
-    IEnumerator pause()
+    IEnumerator Pause()
     {
         yield return new WaitForSeconds(1);
         if(_faceUp == true)
