@@ -18,7 +18,6 @@ public class GameManager : VersionedView {
 
     private static GameManager _manager;
 
-
     public static GameManager GetGameManager()
     {
         return _manager;
@@ -104,11 +103,10 @@ public class GameManager : VersionedView {
         {
             //No match was found
             Debug.Log("No Match");
-            card1.FlipDown();
-            card2.FlipDown();
+            StartCoroutine(card1.FlipDown());
+            StartCoroutine(card2.FlipDown());
         }
         card1 = card2 = null;
         currentState = BoardState.Flipping;
     }
-
 }

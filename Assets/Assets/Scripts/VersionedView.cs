@@ -22,7 +22,6 @@ public class VersionedView : MonoBehaviour, IVersioned
 
     public virtual void DirtyUpdate()
     {
-
     }
 
     public void MarkDirty()

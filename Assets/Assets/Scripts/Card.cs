@@ -9,7 +9,6 @@ public class Card : VersionedView {
 
     public GameObject manager;
 
-    [SerializeField]
     private int _cardValue;
 
     private Sprite _cardBack;
@@ -40,26 +39,28 @@ public class Card : VersionedView {
     {
         if (currentState == CardState.Hidden)
         {
-            FlipUp();
-            MarkDirty();
+            CardFlip();
         }
+    }
+    public void CardFlip()
+    {
+        if (currentState == CardState.Hidden)
+            FlipUp();
+        else
+            StartCoroutine(FlipDown());
     }
     public void FlipUp()
     {
-        if (currentState == CardState.Hidden)
-        {
-            GetComponent<Image>().sprite = _cardFace;
-            currentState = CardState.Flipped;
-            manager.GetComponent<GameManager>().SetCardsToMatch(this);
-        }
+        GetComponent<Image>().sprite = _cardFace;
+        currentState = CardState.Flipped;
+        manager.GetComponent<GameManager>().SetCardsToMatch(this);
+        MarkDirty();
     }
-    public void FlipDown()
+    public IEnumerator FlipDown()
     {
-        if (currentState == CardState.Flipped)
-        {
-            GetComponent<Image>().sprite = _cardBack;
-            currentState = CardState.Hidden;
-            MarkDirty();
-        }
+        yield return new WaitForSeconds(delay);
+        GetComponent<Image>().sprite = _cardBack;
+        currentState = CardState.Hidden;
+        MarkDirty();
     }
 }
