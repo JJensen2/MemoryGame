@@ -16,15 +16,28 @@ public class GameManager : VersionedView {
     private Card card1 = null;
     private Card card2 = null;
 
+    private int matchesCount;
+    public Text matchesText;
+
     private static GameManager _manager;
 
     public static GameManager GetGameManager()
     {
         return _manager;
     }
+    public Sprite GetCardBack()
+    {
+        return cardBack;
+    }
+    public Sprite GetCardFace(int i)
+    {
+        return cardFace[i];
+    }
     public void Start()
     {
         InitializeCards();
+        matchesCount = cards.Length/2;
+        
     }
 
 	public override void DirtyUpdate () {
@@ -33,6 +46,10 @@ public class GameManager : VersionedView {
         {
             Compare();
         }
+        matchesText.text = "Remaining Pairs: " + matchesCount;
+        if (matchesCount == 0)
+            SceneManager.LoadScene("Main");
+
 	}
     void InitializeCards()
     {
@@ -59,14 +76,7 @@ public class GameManager : VersionedView {
         }
 
     }
-    public Sprite GetCardBack()
-    {
-        return cardBack;
-    }
-    public Sprite GetCardFace(int i)
-    {
-        return cardFace[i];
-    }
+    
     private List<int> RandomizeList(List<int> l)
     {
         for(int i = 0; i < l.Count; i++)
@@ -97,12 +107,11 @@ public class GameManager : VersionedView {
         if (card1.cardValue == card2.cardValue)
         {
             //A match was found
-            Debug.Log("Match Found");
+            matchesCount--;
         }
         else
         {
             //No match was found
-            Debug.Log("No Match");
             StartCoroutine(card1.FlipDown());
             StartCoroutine(card2.FlipDown());
         }

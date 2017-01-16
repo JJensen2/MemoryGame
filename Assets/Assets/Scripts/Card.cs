@@ -18,6 +18,7 @@ public class Card : VersionedView {
 
     public override void DirtyUpdate()
     {
+        //can be used if flip animations are added
     }
 
     public int cardValue
@@ -26,9 +27,6 @@ public class Card : VersionedView {
         set { _cardValue = value; }
     }
 
-    void Start()
-    {
-    }
     public void InitializeCard(int initValue)
     {
         _cardValue = initValue;
